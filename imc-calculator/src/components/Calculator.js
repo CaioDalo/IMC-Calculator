@@ -1,25 +1,44 @@
-import { Container } from "./style" 
+import {useState} from 'react'
+
+import { Container } from "./style"
 
 export function Calculator() {
 
-    function calculate() {
-        
+    const [height, setHeight] = useState()
+    const [weight, setWeigth] = useState()
+    const [IMC, setIMC] = useState(0)
+
+    const calculate = (e) => {
+        e.preventDefault()
+        setIMC(weight / (height*height))
     }
 
     return (
         <Container>
-            <div>
-                <input type="number" placeholder="Altura em metros"/>
-            </div>
-            
-            <div>
-                <input type="number" placeholder="Peso em kilogramas"/>
-            </div>
+            <form onSubmit={calculate}>
+                <div>
+                    <input 
+                        type="number" 
+                        value={height} 
+                        placeholder="Altura em metros"
+                        onChange={event => setHeight(Number(event.target.value))}
+                    />
+                </div>
+                
+                <div>
+                    <input 
+                        type="number" 
+                        value={weight} 
+                        placeholder="Peso em kilogramas"
+                        onChange={event => setWeigth(Number(event.target.value))}
+                    />
+                </div>
 
-            <button>Calcular</button>
+                <button type="submit">Calcular</button>
+            </form>
 
             <div>
-                <p>Seu IMC é: 20</p>
+                <p>Seu IMC é: {IMC.toFixed(2)}</p>
             </div>
         </Container>
     )
